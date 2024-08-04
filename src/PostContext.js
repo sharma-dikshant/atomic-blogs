@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -49,4 +49,14 @@ function PostProvider({ children }) {
   );
 }
 
-export { PostProvider, PostContext };
+// creating custom hook for the PostContext
+
+function usePost() {
+  const context = useContext(PostContext);
+  if (!context) {
+    throw new Error("usePost must be used within a PostProvider");
+  }
+  return context;
+}
+
+export { PostProvider, usePost };
